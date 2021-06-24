@@ -4,3 +4,4 @@
 |===
 | Example | Description
 | link:./file-bindy-ftp[File consumer with Bindy & FTP] | Shows how to consume CSV files, marshal & unmarshal the data and send it onwards via FTP
+| link:./kafka[Kafka consumer and producer] | Shows how to produce and consume messages in a Kafka topic, using Strimzi operator or Red Hat OpenShift Streams for Apache Kafka.
