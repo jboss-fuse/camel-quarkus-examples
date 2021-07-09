@@ -1,5 +1,5 @@
 = Kafka example : A Camel Quarkus example
-:cq-example-description: An example that shows how to produce and consume messages in a Kafka topic, using Strimzi or Red Hat OpenShift Streams for Apache Kafka.
+:cq-example-description: An example that shows how to produce and consume messages in a Kafka topic, created on a Kafka cluster with OpenShift Streams for Apache Kafka.
 
 {cq-description}
 
@@ -9,32 +9,70 @@ and other general information.
 
 == Prerequisites
 
-The example application requires a running Kafka instance. For simplicity, you can launch the Kafka instance using the docker-compose.yaml.
+This quickstart assumes that you already have access to Red Hat OpenShift Streams for Apache Kafka[https://developers.redhat.com/products/red-hat-openshift-streams-for-apache-kafka/getting-started].
 
+== Provision a Kafka cluster with OpenShift Streams for Apache Kafka
+You can provision either using the UI or RHOAS cli, as decribed in following sections
+
+== Provision a Kafka cluster with Openshift Streams for Apache Kafka using UI
+1. Go to https://cloud.redhat.com/application-services[cloud.redhat.com], and log with your red hat account, or create one.
+2. Create a new Kafka instance, following the https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f351c4bd-9840-42ef-bcf2-b0c9be4ee30a#_b4f95791-b992-429d-9e8e-cceb63ae829f[Creating a Kafka instance in OpenShift Streams for Apache Kafka Guide].
+3. Create a topic named `test` following the https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f351c4bd-9840-42ef-bcf2-b0c9be4ee30a#_e7458089-1dfe-4d51-bfd0-990014e7226c[Creating a Kafka topic in OpenShift Streams for Apache Kafka Guide].
+4. Create a set of credentials, following the https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f351c4bd-9840-42ef-bcf2-b0c9be4ee30a#_7cb5e3f0-4b76-408d-b245-ff6959d3dbf7[Creating a service account to connect to a Kafka instance in OpenShift Streams for Apache Kafka Guide].
+Copy those credentials in the secret file `kubefiles/secret.yml`.
+- Change YOUR_KAFKA_SASL_CLIENT_ID by the Client ID
+- Change YOUR_KAFKA_SASL_CLIENT_SECRET by the Client Secret
+- Change YOUR_KAFKA_BROKERS_URL by the Bootstrap server
+- Change YOUR_KAFKA_SASL_OAUTHBEARER_TOKEN_URL by the SASL/OAUTHBEARER Token endpoint URL
+
+== Provision a Kafka cluster with Openshift Streams for Apache Kafka using RHOAS cli
+1. Install the https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f520e427-cad2-40ce-823d-96234ccbc047#_8818f0d5-ae20-42c8-9622-a98e663ff1a8[Red Hat OpenShift Application Services command-line interface (CLI)].
+2. Login to Openshift Streams for Apache Kafka, following the https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f520e427-cad2-40ce-823d-96234ccbc047#_e081dde5-54e8-4cd2-81e5-4a53bf1f4338[Logging in to rhoas Guide].
+3. Create a new Kafka instance, following the https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f520e427-cad2-40ce-823d-96234ccbc047#_creating_a_kafka_instance[Creating a Kafka instance Guide].
+4. Create a topic named `test` following the https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f520e427-cad2-40ce-823d-96234ccbc047#_creating_a_kafka_topic[Creating a Kafka topic Guide].
+5. Create a set of credentials, following the https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f520e427-cad2-40ce-823d-96234ccbc047#_creating_a_service_account[Creating a service account Guide].
+Copy those credentials in the secret file `kubefiles/secret.yml`.
+- Change YOUR_KAFKA_SASL_CLIENT_ID by the Client ID
+- Change YOUR_KAFKA_SASL_CLIENT_SECRET by the Client Secret
+- Change YOUR_KAFKA_BROKERS_URL by the Bootstrap server
+- Change YOUR_KAFKA_SASL_OAUTHBEARER_TOKEN_URL by the SASL/OAUTHBEARER Token endpoint URL
+
+== Set the right Kafka client credentials
+- If you want to connect to your Kafka instance using SASL Plain, you'd need to uncomment the Kafka credentials with SASL Plain section in `src/main/resources/application.properties`.
+
+[source,shell]
 ----
-$ cd conf && docker-compose up
+camel.component.kafka.brokers=${brokers}
+camel.component.kafka.security-protocol=SASL_SSL
+camel.component.kafka.sasl-mechanism=PLAIN
+camel.component.kafka.sasl-jaas-config=org.apache.kafka.common.security.plain.PlainLoginModule required username="${id}" password="${secret}";
 ----
 
-Next : uncomment the The section Kafka instance without Authentication in `src/main/resources/application.properties` and set :
+- If you want to connect to your Kafka instance using SASL Oauth Bearer, you'd need to uncomment the Kafka credentials with SASL Oauth Bearer section in `src/main/resources/application.properties`.
+
+[source,shell]
 ----
-camel.component.kafka.brokers=localhost:9092
+camel.component.kafka.brokers = ${brokers}
+camel.component.kafka.security-protocol = SASL_SSL
+camel.component.kafka.sasl-mechanism = OAUTHBEARER
+camel.component.kafka.sasl-jaas-config = org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required \
+        oauth.client.id="${id}" \
+        oauth.client.secret="${secret}" \
+        oauth.token.endpoint.uri="${token}" ;
+camel.component.kafka.additional-properties[sasl.login.callback.handler.class] = io.strimzi.kafka.oauth.client.JaasClientOauthLoginCallbackHandler
 ----
-
-If you prefer to use a different Kafka instance uncomment and adjust the corresponding commented section in `src/main/resources/application.properties`.
-
-- The section Kafka instance without Authentication if no Authentication required.
-- The section Kafka instance with SASL Plain is using SASL.
-- The section Kafka instance with SASL Oauth Bearer if using Oauth Bearer.
-
-==== Use the Red Hat OpenShift Streams for Apache Kafka with credentials
-
-Steps to use the application with Red Hat OpenShift Streams for Apache Kafka :
-
-- In order to setup an instance and your topic named `Test`, you can follow up the https://cloud.redhat.com/beta/application-services/streams/resources[UI quickstart] or use the https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f520e427-cad2-40ce-823d-96234ccbc047[rhoas CLI].
-- Create a set of credentials using following instructions for https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f351c4bd-9840-42ef-bcf2-b0c9be4ee30a#_7cb5e3f0-4b76-408d-b245-ff6959d3dbf7[UI service account creation] or https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f520e427-cad2-40ce-823d-96234ccbc047#_5199d61c-8435-45b0-83f2-9c8c93ef3e31[RHOAS cli service account creation]
-- Update credentials Kafka section in `src/main/resources/application.properties` for SASL Plain or SASL Oauth Bearer
 
 == Start in Development mode
+
+To run the application in development mode, you'd need to set the environment variables for kafka client credentials.
+
+[source,shell]
+----
+$ export brokers=<YOUR_KAFKA_BROKERS_URL>
+$ export id=<YOUR_KAFKA_SASL_CLIENT_ID>
+$ export secret=<YOUR_KAFKA_SASL_CLIENT_SECRET>
+$ export token=<YOUR_KAFKA_SASL_OAUTHBEARER_TOKEN_URL>
+----
 
 Run the application in development mode.
 
@@ -45,6 +83,7 @@ $ mvn clean compile quarkus:dev
 
 The above command compiles the project, starts the application and lets the Quarkus tooling watch for changes in your
 workspace. Any modifications in your project will automatically take effect in the running application.
+
 
 TIP: Please refer to the Development mode section of
 https://camel.apache.org/camel-quarkus/latest/first-steps.html#_development_mode[Camel Quarkus User guide] for more details.
@@ -83,6 +122,12 @@ $ java -jar target/*-runner.jar
 ----
 
 ==== Deploying to OpenShift
+Create the secret.
+
+[source,shell]
+----
+$ kubectl apply -f kubefiles/secret.yml
+----
 
 To deploy the application to OpenShift run the following command.
 
@@ -129,6 +174,7 @@ To clean up do.
 [source,shell]
 ----
 $ oc delete all -l app.kubernetes.io/name=camel-quarkus-examples-kafka
+$ oc delete secret camel-kafka
 ----
 
 [NOTE]

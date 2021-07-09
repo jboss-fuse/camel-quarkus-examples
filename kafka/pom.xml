@@ -44,6 +44,7 @@
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <kafka-oauth-client.version>0.7.1.redhat-00003</kafka-oauth-client.version>
         <mycila-license.version>3.0</mycila-license.version>
         <strimzi.testcontainers.version>0.20.1</strimzi.testcontainers.version>
     </properties>
@@ -64,6 +65,11 @@
                 <version>${camel-quarkus.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.strimzi</groupId>
+                <artifactId>kafka-oauth-client</artifactId>
+                <version>${kafka-oauth-client.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -95,7 +101,16 @@
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-kubernetes</artifactId>
+            <artifactId>quarkus-openshift</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-container-image-openshift</artifactId>
+        </dependency>
+        <!-- this oauth client is used for SASL Oauth Bearer -->
+        <dependency>
+            <groupId>io.strimzi</groupId>
+            <artifactId>kafka-oauth-client</artifactId>
         </dependency>
 
         <!-- Test -->
