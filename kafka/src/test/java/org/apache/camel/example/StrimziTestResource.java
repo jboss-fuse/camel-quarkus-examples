@@ -16,34 +16,28 @@
  */
 package org.apache.camel.example;
 
+import java.util.Collections;
 import java.util.Map;
 
 import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
 import io.strimzi.StrimziKafkaContainer;
-import org.apache.camel.util.CollectionHelper;
 
 public class StrimziTestResource implements QuarkusTestResourceLifecycleManager {
 
-    private StrimziKafkaContainer strimziKafkaContainer;
-    private static final int KAFKA_PORT = 9092;
-    private static final String KAFKA_STRIMZI_VERSION = "0.20.1-kafka-2.5.0";
+    private static final StrimziKafkaContainer kafka = new StrimziKafkaContainer();
+
+    public static String getBootstrapServers() {
+        return kafka.getBootstrapServers();
+    }
 
     @Override
     public Map<String, String> start() {
-        strimziKafkaContainer = new StrimziKafkaContainer(KAFKA_STRIMZI_VERSION);
-        strimziKafkaContainer.start();
-
-        String bootstrap_servers = strimziKafkaContainer.getContainerIpAddress() + ":"
-                + strimziKafkaContainer.getMappedPort(KAFKA_PORT);
-
-        return CollectionHelper.mapOf(
-                "camel.component.kafka.brokers", bootstrap_servers);
+        kafka.start();
+        return Collections.singletonMap("camel.component.kafka.brokers", kafka.getBootstrapServers());
     }
 
     @Override
     public void stop() {
-        if (strimziKafkaContainer != null) {
-            strimziKafkaContainer.stop();
-        }
+        kafka.close();
     }
 }

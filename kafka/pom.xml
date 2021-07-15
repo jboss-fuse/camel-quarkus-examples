@@ -46,7 +46,6 @@
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <kafka-oauth-client.version>0.7.1.redhat-00003</kafka-oauth-client.version>
         <mycila-license.version>3.0</mycila-license.version>
-        <strimzi.testcontainers.version>0.20.1</strimzi.testcontainers.version>
     </properties>
 
     <dependencyManagement>
@@ -136,8 +135,7 @@
         </dependency>
         <dependency>
             <groupId>io.strimzi</groupId>
-            <artifactId>test-container</artifactId>
-            <version>${strimzi.testcontainers.version}</version>
+            <artifactId>strimzi-test-container</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
