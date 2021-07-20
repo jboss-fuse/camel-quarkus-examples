@@ -15,7 +15,7 @@ This quickstart assumes that you already have access to Red Hat OpenShift Stream
 You can provision either using the UI or RHOAS cli, as decribed in following sections
 
 == Provision a Kafka cluster with Openshift Streams for Apache Kafka using UI
-1. Go to https://cloud.redhat.com/application-services[cloud.redhat.com], and log with your red hat account, or create one.
+1. Go to https://cloud.redhat.com/application-services[cloud.redhat.com], and log with your Red Hat account, or create one.
 2. Create a new Kafka instance, following the https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f351c4bd-9840-42ef-bcf2-b0c9be4ee30a#_b4f95791-b992-429d-9e8e-cceb63ae829f[Creating a Kafka instance in OpenShift Streams for Apache Kafka Guide].
 3. Create a topic named `test` following the https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f351c4bd-9840-42ef-bcf2-b0c9be4ee30a#_e7458089-1dfe-4d51-bfd0-990014e7226c[Creating a Kafka topic in OpenShift Streams for Apache Kafka Guide].
 4. Create a set of credentials, following the https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f351c4bd-9840-42ef-bcf2-b0c9be4ee30a#_7cb5e3f0-4b76-408d-b245-ff6959d3dbf7[Creating a service account to connect to a Kafka instance in OpenShift Streams for Apache Kafka Guide].
@@ -183,7 +183,6 @@ If you need to configure container resource limits & requests, or enable the Qua
 ====
 
 For more information about deploying Quarkus applications to OpenShift, refer to the https://access.redhat.com/documentation/en-us/red_hat_build_of_quarkus/1.11/html/deploying_your_quarkus_applications_to_openshift/ref-openshift-build-strategies-and-quarkus_quarkus-openshift[documentation].
-
 
 
 
