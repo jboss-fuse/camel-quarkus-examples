@@ -1,0 +1,8 @@
+= Managed Kafka and Service Registry Example with Camel-Quarkus: Producer Side
+
+:cq-example-description: An example that shows how to produce messages to Managed Kafka through the usage of Managed Service Registry and Avro Schema
+
+{cq-description}
+
+TIP: Check the https://camel.apache.org/camel-quarkus/latest/first-steps.html[Camel Quarkus User guide] for prerequisites
+and other general information.
