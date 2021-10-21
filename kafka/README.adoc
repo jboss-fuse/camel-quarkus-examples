@@ -18,14 +18,16 @@ You can provision either using the UI or RHOAS cli, as described in following se
 2. Create a new Kafka instance, following the https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f351c4bd-9840-42ef-bcf2-b0c9be4ee30a#_b4f95791-b992-429d-9e8e-cceb63ae829f[Creating a Kafka instance in OpenShift Streams for Apache Kafka Guide].
 3. Create a topic named `test` following the https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f351c4bd-9840-42ef-bcf2-b0c9be4ee30a#_e7458089-1dfe-4d51-bfd0-990014e7226c[Creating a Kafka topic in OpenShift Streams for Apache Kafka Guide].
 4. Create a set of credentials, following the https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f351c4bd-9840-42ef-bcf2-b0c9be4ee30a#_7cb5e3f0-4b76-408d-b245-ff6959d3dbf7[Creating a service account to connect to a Kafka instance in OpenShift Streams for Apache Kafka Guide].
+5. Set permissions for the service account, following the https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f351c4bd-9840-42ef-bcf2-b0c9be4ee30a#_3dc6265b-96f9-49fd-b2f6-9e3688859539[Setting permissions for a service account in a Kafka instance in OpenShift Streams for Apache Kafka Guide].
 
 == Provision a Kafka cluster with Openshift Streams for Apache Kafka using RHOAS cli
-1. Open the https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f520e427-cad2-40ce-823d-96234ccbc047[Getting started with the rhoas CLI documentation]
+1. Open the https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f520e427-cad2-40ce-823d-96234ccbc047[Installing and configuring the rhoas CLI documentation].
 2. Install the RHOAS cli, following the `Installing the rhoas CLI` section.
 3. Login to the Openshift Streams for Apache Kafka, following the `Logging in to rhoas` section.
-4. Create a new Kafka instance, following the `Creating a Kafka instance` in the `Using rhoas` section.
-5. Create a topic named `test`, following the `Creating a Kafka topic` in the `Using rhoas` section.
-6. Create a set of credentials, following the `Creating a service account` in the `Using rhoas` section.
+4. Open the https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/88e1487a-2a14-4b35-85b9-a7a2d67a37f3#_fe8d86db-14f8-4adb-a05a-1c3736c6d8dc[Getting started with the rhoas CLI for Red Hat OpenShift Streams for Apache Kafka documentation].
+5. Create a new Kafka instance, following the `Creating a Kafka instance` in the `Using rhoas` section.
+6. Create a topic named `test`, following the `Creating a Kafka topic` in the `Using rhoas` section.
+7. Create a set of credentials, and manage permissions following the `Creating a service account` in the `Using rhoas` section.
 
 == Set the right Kafka client credentials
 In the Kafka Instances page of the web console, for the relevant Kafka instance that you want to connect to, select the options icon (three vertical dots) and click View connection information.
