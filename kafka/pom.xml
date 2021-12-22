@@ -28,7 +28,7 @@
     <description>Camel Quarkus Example :: Kafka</description>
 
     <properties>
-        <quarkus.platform.version>2.2.3.Final-redhat-00013</quarkus.platform.version>
+        <quarkus.platform.version>2.2.3.SP1-redhat-00002</quarkus.platform.version>
         <camel-quarkus.platform.version>${quarkus.platform.version}</camel-quarkus.platform.version>
 
         <quarkus.platform.group-id>com.redhat.quarkus.platform</quarkus.platform.group-id>
