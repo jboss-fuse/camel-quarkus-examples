@@ -17,6 +17,8 @@
 
 package org.acme.resource;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.Map;
 
 import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
@@ -41,8 +43,8 @@ public class ElasticSearchTestResource implements QuarkusTestResourceLifecycleMa
                 .withExposedPorts(9200)
                 .withEnv("discovery.type", "single-node")
                 .withEnv("xpack.security.enabled", "false")
+                .withStartupTimeout(Duration.of(5, ChronoUnit.MINUTES))
                 .waitingFor(Wait.forListeningPort());
-        ;
 
         container.start();
 
