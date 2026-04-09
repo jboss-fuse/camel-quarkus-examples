@@ -22,16 +22,16 @@
 
     <artifactId>camel-quarkus-examples-message-bridge</artifactId>
     <groupId>org.apache.camel.quarkus.examples</groupId>
-    <version>3.33.0</version>
+    <version>3.33.0.redhat-00001</version>
 
     <name>Camel Quarkus :: Examples :: Message Bridge</name>
     <description>Camel Quarkus Example :: Configure XA Transactions and connection pooling</description>
 
     <properties>
-        <quarkus.platform.version>3.33.1</quarkus.platform.version>
+        <quarkus.platform.version>3.33.1.temporary-redhat-00001</quarkus.platform.version>
         <camel-quarkus.platform.version>${quarkus.platform.version}</camel-quarkus.platform.version>
 
-        <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+        <quarkus.platform.group-id>com.redhat.quarkus.platform</quarkus.platform.group-id>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <camel-quarkus.platform.group-id>${quarkus.platform.group-id}</camel-quarkus.platform.group-id>
         <camel-quarkus.platform.artifact-id>quarkus-camel-bom</camel-quarkus.platform.artifact-id>
@@ -107,7 +107,6 @@
         <dependency>
             <groupId>io.quarkiverse.artemis</groupId>
             <artifactId>quarkus-artemis-jms</artifactId>
-            <version>${quarkiverse-artemis.version}</version>
         </dependency>
 
         <!-- Test -->
@@ -149,45 +148,52 @@
         </dependency>
     </dependencies>
 
-    <profiles>
-        <profile>
-            <id>kubernetes</id>
-            <activation>
-                <property>
-                    <name>kubernetes</name>
-                </property>
-            </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>io.quarkus</groupId>
-                    <artifactId>quarkus-kubernetes</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>io.quarkus</groupId>
-                    <artifactId>quarkus-container-image-jib</artifactId>
-                </dependency>
-            </dependencies>
+    <repositories>
+        <repository>
+            <id>redhat-ga-repository</id>
+            <url>https://maven.repository.redhat.com/ga/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>redhat-earlyaccess-repository</id>
+            <url>https://maven.repository.redhat.com/earlyaccess/all/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>redhat-ga-repository</id>
+            <url>https://maven.repository.redhat.com/ga/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>redhat-earlyaccess-repository</id>
+            <url>https://maven.repository.redhat.com/earlyaccess/all/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>${quarkus.platform.group-id}</groupId>
-                        <artifactId>quarkus-maven-plugin</artifactId>
-                        <version>${quarkus.platform.version}</version>
-                        <configuration>
-                            <systemProperties>
-                                <quarkus.profile>kubernetes</quarkus.profile>
-                                <quarkus.container-image.build>true</quarkus.container-image.build>
-                                <quarkus.kubernetes.ingress.expose>true</quarkus.kubernetes.ingress.expose>
-                                <quarkus.kubernetes.pvc-volumes.storage.claim-name>message-bridge</quarkus.kubernetes.pvc-volumes.storage.claim-name>
-                                <quarkus.kubernetes.mounts.storage.path>/storage</quarkus.kubernetes.mounts.storage.path>
-                                <quarkus.kubernetes.image-pull-policy>IfNotPresent</quarkus.kubernetes.image-pull-policy>
-                            </systemProperties>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
+    <profiles>
         <profile>
             <id>openshift</id>
             <activation>
