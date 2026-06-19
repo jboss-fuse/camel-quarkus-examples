@@ -46,7 +46,6 @@ public class IBMMQTestResource implements QuarkusTestResourceLifecycleManager {
         } catch (IOException e) {
             throw new RuntimeException("Unable to create password file", e);
         }
-
         container = new GenericContainer<>(DockerImageName.parse(IMAGE_NAME))
                 .withExposedPorts(PORT)
                 .withEnv(Map.of(
