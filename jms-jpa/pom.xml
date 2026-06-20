@@ -25,7 +25,7 @@
     <name>Camel Quarkus :: Examples :: JMS JPA</name>
     <description>Camel Quarkus Example :: JMS JPA</description>
     <properties>
-        <quarkus.platform.version>3.27.3.SP2-redhat-00001</quarkus.platform.version>
+        <quarkus.platform.version>3.27.4.SP1-redhat-00001</quarkus.platform.version>
         <camel-quarkus.platform.version>${quarkus.platform.version}</camel-quarkus.platform.version>
         <quarkiverse-artemis.version>3.8.4</quarkiverse-artemis.version>
 
@@ -185,7 +185,6 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-
 
     <build>
         <pluginManagement>
