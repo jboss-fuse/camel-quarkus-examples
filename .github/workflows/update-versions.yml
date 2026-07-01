@@ -1,0 +1,39 @@
+name: update-versions
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Run every day at 2AM
+    - cron:  '0 2 * * *'
+
+env:
+  LANG: en_US.UTF-8
+
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  issues: write
+  
+jobs:
+  update-versions:
+    if: github.repository == 'jboss-fuse/camel-quarkus-examples'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+
+    steps:
+
+    - uses: actions/checkout@v5
+      with:
+        fetch-depth: 0
+
+    - name: update-versions
+      uses: ./.github/actions/update-versions
+      id: update-versions
+      with:
+        token: "${{ secrets.GITHUB_TOKEN }}"
+        issueId: '40'
+        workflowRunUrl: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
