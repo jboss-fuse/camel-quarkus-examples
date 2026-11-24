@@ -1,0 +1,36 @@
+name: update-versions
+description: |
+   Update the versions of RHBQ Platform in all active branches
+
+inputs:
+  token:
+    description: "The token to use to authenticate against GitHub API and to pull/push"
+    required: true
+  issueId:
+    description: "The ID of the GitHub issue where to report issues"
+    required: true
+  workflowRunUrl:
+    description: "The URL if the workflow run to show in the issue comment"
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+
+    - name: Set up JDK 25
+      uses: actions/setup-java@v5
+      with:
+        distribution: temurin
+        java-version: 25
+
+    - name: Update versions
+      shell: bash
+      env:
+        GITHUB_ISSUE_ID: ${{ inputs.issueId }}
+        GITHUB_TOKEN: ${{ inputs.token }}
+        GITHUB_REPOSITORY: ${{ github.repository }}
+        CEQ_EXAMPLES_GIT_REPOSITORY: https://github.com/${{ github.repository }}.git
+        WORKFLOW_RUN_URL: ${{ inputs.workflowRunUrl }}
+      run: |
+        cd .github/actions/update-versions
+        ./mvnw clean test -B -ntp
