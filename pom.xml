@@ -66,7 +66,6 @@
         <module>rest-json</module>
         <module>rest-keycloak-soap-jms</module>
         <module>saga</module>
-        <module>spring-redis</module>
         <module>timer-log</module>
         <module>timer-log-main</module>
         <module>variables</module>
